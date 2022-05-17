@@ -1,0 +1,20 @@
+import Data.Char
+
+encipher :: String -> [Int] -> String
+encipher m n = unwords(map (`shiftedword` n) (uppercase m))
+    where
+    uppercase m = words (map (toUpper) m)
+    shiftedchar c n = chr((mod ((ord c - ord 'A') + n) 26) + ord 'A')
+    shiftedword w n = zipWith (shiftedchar) w n
+    
+decipher :: String -> [Int] -> String
+decipher m n = unwords(map (`shiftedword` n) (uppercase m))
+    where
+    uppercase m = words (map (toUpper) m)
+    shiftedchar c n = chr((mod ((ord c + ord 'A') - n) 26) + ord 'A')
+    shiftedword w n = zipWith (shiftedchar) w n    
+    
+main :: IO()
+main = do
+    putStrLn ( encipher "Hello there" [1,2,3,4,3,4,2,1,3,5] )
+    putStrLn ( decipher "IGOPR UJHVH" [1,2,3,4,3,4,2,1,3,5] )
